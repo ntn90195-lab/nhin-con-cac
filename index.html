@@ -1,106 +1,103 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Máy Đo Đẹp Trai</title>
-<style>
-    body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #fce1ec, #f6d0f4);
-        font-family: Arial, sans-serif;
-        color: #333;
-        text-align: center;
-    }
-    h1 {
-        margin-bottom: 10px;
-    }
-    input {
-        padding: 8px;
-        border: none;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        font-size: 16px;
-    }
-    button {
-        padding: 8px 15px;
-        font-size: 16px;
-        border: none;
-        background-color: #ff70a6;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #ff477e;
-    }
-    .loading {
-        font-weight: bold;
-        display: inline-block;
-        animation: rotate 1s linear infinite;
-        font-size: 20px;
-        margin-top: 10px;
-    }
-    @keyframes rotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    .footer {
-        position: fixed;
-        bottom: 5px;
-        right: 10px;
-        font-size: 12px;
-        opacity: 0.6;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy đo độ đẹp trai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+            text-align: center;
+            padding: 50px;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #ff6f91;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #loading {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .rotate {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        small {
+            display: block;
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(0,0,0,0.6);
+        }
+    </style>
 </head>
 <body>
+    <h1>Máy đo độ đẹp trai</h1>
+    <input type="text" id="name" placeholder="Nhập tên của bạn">
+    <br>
+    <button onclick="measure()">Đo</button>
+    <div id="loading"></div>
+    <div id="result"></div>
+    <small>Made by Kỷ Nguyên</small>
 
-<h1>Máy Đo Đẹp Trai</h1>
-<input type="text" id="name" placeholder="Nhập tên của bạn">
-<button onclick="measure()">Đo</button>
+    <script>
+        function messageForScore(score) {
+            if (score < 25) return "Thật sự nghĩ mình đẹp trai sao? =))";
+            if (score < 50) return "Cũng tạm ổn mà nhìn vẫn ngáo";
+            if (score < 75) return "Ừm... nhìn cũng đẹp trai đấy, thế có sóc lọ bao giờ chưa?";
+            if (score < 90) return "Crush đổ ầm ầm nha";
+            return "AMAZING GOODJOB BRO";
+        }
 
-<div id="loading"></div>
-<div id="result"></div>
+        function measure() {
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                alert("Nhập tên vào đã!");
+                return;
+            }
+            document.getElementById('loading').innerHTML = `<span class="rotate">LOADING</span>`;
+            document.getElementById('result').innerHTML = '';
 
-<div class="footer">Made by Kỷ Nguyên</div>
+            setTimeout(() => {
+                const score = Math.floor(Math.random() * 101);
+                document.getElementById('loading').innerHTML = '';
+                document.getElementById('result').innerHTML = 
+                    `<h2>${score}% đẹp trai</h2><p>${messageForScore(score)}</p>`;
 
-<!-- File âm thanh phải để cùng thư mục -->
-<audio id="sound" src="oi-ban-oi.mp3" preload="auto"></audio>
+                // Sau 2 giây hiện video Rickroll toàn màn hình
+                setTimeout(() => {
+                    document.body.innerHTML = `<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+                }, 2000);
 
-<script>
-function messageForScore(score) {
-    if (score >= 90) return "AMAZING GOODJOB BRO";
-    if (score >= 75) return "Crush đổ ầm ầm nha";
-    if (score >= 50) return "Ừm... nhìn cũng đẹp trai đấy, thế có sóc lọ bao giờ chưa ?";
-    if (score >= 25) return "Cũng tạm ổn mà nhìn vẫn ngáo";
-    return "Thật sự nghĩ mình đẹp trai sao ?=))";
-}
-
-function measure() {
-    const name = document.getElementById('name').value.trim();
-    if (!name) {
-        alert('Nhập tên vào đã bạn êi!');
-        return;
-    }
-
-    document.getElementById('sound').play(); // phát tiếng
-    document.getElementById('loading').innerHTML = '<span class="loading">LOADING</span>';
-    document.getElementById('result').innerHTML = '';
-
-    setTimeout(() => {
-        const score = Math.floor(Math.random() * 101);
-        document.getElementById('loading').innerHTML = '';
-        document.getElementById('result').innerHTML = 
-            `<h2>${score}% đẹp trai</h2><p>${messageForScore(score)}</p>`;
-    }, 2000);
-}
-</script>
-
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
