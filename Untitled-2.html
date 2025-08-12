@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Đo độ đẹp trai</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fce1ec, #f6d0f4);
+    font-family: system-ui, Roboto, Segoe UI, -apple-system;
+  }
+  .container {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 320px;
+  }
+  input {
+    padding: 8px;
+    width: 90%;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  button {
+    background: #ff8ac9;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button:hover {
+    background: #ff64b8;
+  }
+  .result {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .loading {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+    font-weight: bold;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+  .credit {
+    margin-top: 10px;
+    font-size: 10px;
+    color: gray;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>Máy đo độ đẹp trai</h2>
+    <input type="text" id="name" placeholder="Nhập tên của bạn">
+    <br>
+    <button onclick="doDoDepTrai()">Đo</button>
+    <div class="result" id="result"></div>
+    <div class="credit">Made by Kỷ Nguyên</div>
+  </div>
+
+<script>
+function messageForScore(score) {
+  if (score >= 90) return "AMAZING GOODJOB BRO";
+  if (score >= 75) return "Crush đổ ầm ầm nha";
+  if (score >= 50) return "Ừm... nhìn cũng đẹp trai đấy, thế có sóc lọ bao giờ chưa ?";
+  if (score >= 25) return "Cũng tạm ổn mà nhìn vẫn ngáo";
+  return "Thật sự nghĩ mình đẹp trai sao ?=))";
+}
+
+function calculateScore(name) {
+  let hash = 5381;
+  for (let i = 0; i < name.length; i++) {
+    hash = ((hash << 5) + hash) + name.charCodeAt(i);
+  }
+  let score = Math.abs(hash) % 101;
+  return score;
+}
+
+function doDoDepTrai() {
+  const name = document.getElementById("name").value.trim();
+  const resultEl = document.getElementById("result");
+  
+  if (!name) {
+    resultEl.innerHTML = "Vui lòng nhập tên!";
+    return;
+  }
+  
+  resultEl.innerHTML = `<span class="loading">LOADING</span>`;
+  
+  setTimeout(() => {
+    const score = calculateScore(name.toLowerCase());
+    resultEl.innerHTML = `${name} đẹp trai: ${score}%<br>${messageForScore(score)}`;
+  }, 1500);
+}
+</script>
+</body>
+</html>
